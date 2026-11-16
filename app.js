@@ -7,12 +7,14 @@
     : `<span class="btn ph" title="${esc(PH[l.type]||'連結待放入')}">${esc(l.label)}<small>🔖 ${esc(PH[l.type]||'連結待放入')}</small></span>`;
   const card = c => `<article class="card"><div class="ph-img" style="background-image:url('${esc(c.img)}')"><span class="tag">${esc(c.tag)}</span></div>
     <div class="body"><h3>${esc(c.title)}</h3><p>${esc(c.text)}</p><div class="btns">${c.links.map(btn).join('')}</div></div></article>`;
-  const nav = cur => `<nav class="tabs">${[{id:'',icon:'🏠',title:'首頁'}].concat(S.categories,[{id:'goods',icon:S.goods.icon,title:S.goods.title}]).map(c=>`<a href="#${c.id}" class="${cur===c.id?'on':''}">${c.icon} ${esc(c.title.split(' ')[0].split('・')[0])}</a>`).join('')}</nav>`;
+  const nav = cur => `<nav class="tabs">${[{id:'',icon:'🏠',title:'首頁'}].concat(S.categories,[{id:'goods',icon:S.goods.icon,title:S.goods.title}]).map(c=>`<a href="#${c.id}" class="${cur===c.id?'on':''}">${c.icon} ${esc(c.title)}</a>`).join('')}</nav>`;
   function home(){
+    const recent = (S.featured||[]).map(card).join('');
     return `<header class="hero"><div class="hero-in"><p class="hi">嗨，我們是</p><h1>travel.comcom</h1>
       <p class="lead">台中・中部的吃喝玩樂整理站。<br>賞楓、看展、泡湯、咖啡、出國優惠，幫你先查好、整理好。</p>
       <a class="igbtn" href="${S.ig}" target="_blank" rel="noopener">📷 追蹤 IG @travel.comcom</a></div></header>
       ${nav('')}
+      ${recent?`<section class="wrap"><h2 class="sec">近期貼文</h2><div class="cards">${recent}</div></section>`:''}
       <section class="wrap"><h2 class="sec">分類入口</h2><div class="grid">
       ${S.categories.map(c=>`<a class="entry" href="#${c.id}"><span class="ei">${c.icon}</span><b>${esc(c.title)}</b><small>${esc(c.desc)}</small></a>`).join('')}
       <a class="entry goods" href="#goods"><span class="ei">${S.goods.icon}</span><b>${S.goods.title}</b><small>行李、收納、旅行小物推薦</small></a>
